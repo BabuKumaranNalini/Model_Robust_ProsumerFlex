@@ -19,7 +19,7 @@ def save_offers(my_ems, market='comax'):
     device = list(my_ems['flexopts'].keys())   
     if market == 'comax':
         for i in range(len(device)):
-            save_offers_comax(my_ems,  device[i],  filetype='csv')
+            save_offers_comax(my_ems,  device[i],  filetype='xlsx')
     elif market == 'alf':
         for i in range(len(device)):
             save_offers_alf(my_ems,  device[i])

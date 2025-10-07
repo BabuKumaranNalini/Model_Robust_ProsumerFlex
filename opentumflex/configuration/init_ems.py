@@ -6,16 +6,6 @@ Besides, all the information from modules of devices parameters, optimal operati
 stored in the ems object for a better overview and quick search of the needed data.
 """
 
-__author__ = "Zhengjie You"
-__copyright__ = "2020 TUM-EWK"
-__credits__ = []
-__license__ = "GPL v3.0"
-__version__ = "1.0"
-__maintainer__ = "Zhengjie You"
-__email__ = "zhengjie.you@tum.de"
-__status__ = "Development"
-
-
 import pandas as pd
 import json as js
 import os
@@ -78,54 +68,14 @@ def update_time_data(ems):
     return dict_time_data
 
 
-def read_data(ems, path=None, to_csv=False, fcst_only=True):
-    """ read device parameters or forecasting data from input file
-
-    :param ems: ems object
-    :param path: path of the input data
-    :param to_csv: determine if csv data will be created
-    :param fcst_only: if False,  forecasting data and device parameters will be read, otherwise only forecasting data
-    :return: ems object updated by the input data
-    """
-
-    # Check for the file type 
-    if path.endswith('.xlsx'):
-        print('Reading your excel file, please wait!')
-        # obtain the spreadsheet data
-        xls = pd.ExcelFile(path)
-        if not fcst_only:            
-            # read device parameters
-            prop = pd.read_excel(xls, sheet_name='properties', index_col=0, usecols=range(0, 3))
-            read_properties(ems, prop)
-        # read forecasting data and write it into ems object
-        ts = pd.read_excel(xls, sheet_name='time_series', usecols='B:I', nrows=ems['time_data']['nsteps'])
-        ems['fcst'] = read_forecast(ts)
-        # Save excel file as CSV
-        if to_csv:
-            basename = os.path.basename(path)
-            filename = os.path.splitext(basename)[0] + '.csv'
-            if not os.path.exists('input'):
-                os.mkdir('input')
-            directory = os.path.join(r'input', filename)
-            with open(directory, 'w') as f:
-                if not fcst_only:
-                    pd.concat([prop, ts], sort=False).to_csv(f, sep=';')
-                else:
-                    prop = pd.DataFrame(index=range(len(ts)), columns=range(0, 2))
-                    pd.concat([prop, ts], sort=False).to_csv(f, sep=';')
-
-    elif path.endswith('.csv'):
-        csv_data = pd.read_csv(path, sep=';', index_col=0)
-        prop = csv_data.iloc[:, 0:2].dropna(how='all')
-        ts = csv_data.iloc[:, 2:].dropna(how='all')
-        # read device parameters
-        if not fcst_only:
-            read_properties(ems, prop)
-        # read forecasting data and write it into ems object
-        ems['fcst'] = read_forecast(ts)
-
-    else:
-        print('Input file format is not accepted, Exit call')
+def read_data(ems, df_sys=None, df_ts=None, to_csv=False, fcst_only=True):
+    # read properties       
+    if not fcst_only:            
+        read_properties(ems, df_sys)
+  
+    # read forecasting data and write it into ems object
+    ts = df_ts[0:ems['time_data']['nsteps']]
+    ems['fcst'] = read_forecast(ts)
 
     return ems
 

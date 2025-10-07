@@ -3,15 +3,6 @@ The "run_scenarios.py" execute all the functional modules within opentumflex fol
 optimization, flexibility calculation...
 """
 
-__author__ = "Zhengjie You"
-__copyright__ = "2020 TUM-EWK"
-__credits__ = []
-__license__ = "GPL v3.0"
-__version__ = "1.0"
-__maintainer__ = "Zhengjie You"
-__email__ = "zhengjie.you@tum.de"
-__status__ = "Development"
-
 # new modules
 import opentumflex
 
@@ -19,10 +10,10 @@ import opentumflex
 import os
 
 
-def run_scenario(scenario, path_input, path_results, solver='glpk', time_limit=30, troubleshooting=True,
-                 show_opt_balance=True, show_opt_soc=True, show_flex_res=True,
-                 save_opt_res=True, show_aggregated_flex=True, save_flex_offers=False,
-                 convert_input_tocsv=True, show_aggregated_flex_price='bar'):
+def run_scenario(scenario, df_sys, df_ts, path_results=r'\output', solver='glpk', time_limit=30, troubleshooting=False,
+                 show_opt_balance=True, show_opt_soc=False, show_flex_res=False,
+                 save_opt_res=False, show_aggregated_flex=False, save_flex_offers=False,
+                 convert_input_tocsv=False, show_aggregated_flex_price='bar'):
     """ run an OpenTUMFlex model for given scenario
 
     Args:
@@ -44,10 +35,10 @@ def run_scenario(scenario, path_input, path_results, solver='glpk', time_limit=3
 
     if scenario == opentumflex.scenario_fromfile:
         # read devices parameters and forecasting data from xlsx or csv file
-        my_ems = opentumflex.read_data(my_ems, path_input, fcst_only=False, to_csv=convert_input_tocsv)
+        my_ems = opentumflex.read_data(my_ems, df_sys, df_ts, fcst_only=False, to_csv=convert_input_tocsv)
     else:
         # read only the input time series from the excel table
-        my_ems = opentumflex.read_data(my_ems, path_input, fcst_only=True, to_csv=convert_input_tocsv)
+        my_ems = opentumflex.read_data(my_ems, df_sys, df_ts, fcst_only=True, to_csv=convert_input_tocsv)
         # modify the opentumflex regarding to predefined scenario
         my_ems = scenario(my_ems)
 
