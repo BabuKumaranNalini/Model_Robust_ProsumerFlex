@@ -58,6 +58,7 @@ MANIFEST
 .venv*/
 venv/
 *.txt
+.vscode/
 
 
 analysis/ev case study/figures/
@@ -65,7 +66,11 @@ analysis/ev case study/output/
 forecast/input/
 output/
 tester/
+archive/
+figures/
 *.png
+ENVIRONMENT_SETUP.md
+LATEX_FIGURE_GUIDE.md
 
 # Docs
 !docs/images/*.png
