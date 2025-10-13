@@ -6,7 +6,7 @@ Created on Sun Aug 24 23:05:30 2025
 
 import opentumflex as fl
 import pandas as pd
-from uncertainty.synthetic_generator import *
+from functions.synthetic_generator import *
 from datetime import datetime
 
 # %% file path
@@ -21,7 +21,7 @@ for n in range(0,n_sample):
     print('Optimizing sample:', n)
     # run synthetic uncertainty generator
     df_ts_new = ug_pvload(df_ts)
-    df_ts_new.to_excel(r'uncertainty\timeseries_'+str(n)+'s.xlsx')
+    df_ts_new.to_excel(r'output\samples\timeseries_'+str(n)+'s.xlsx')
     
     # run opentumflex
     ems = fl.run_scenario(fl.scenario_pv, df_sys=df_sys, df_ts=df_ts_new)   
