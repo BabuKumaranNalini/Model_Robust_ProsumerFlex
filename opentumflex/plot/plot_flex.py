@@ -61,7 +61,7 @@ def plot_flex(my_ems, device):
         # Plotting cummulative energy exchange
         theta = 0
         cum_data = pd.DataFrame(
-                 index=my_ems['time_data']['time_slots'], columns={'cumm'})
+                 index=my_ems['time_data']['time_slots'], columns=['cumm'])
         cum_data.iloc[0, 0] = 0
         for i in range(nsteps - 1):
             cum_data.iloc[i + 1, 0] = theta + dat1['Sch_P'][i]/ntsteps
@@ -101,30 +101,30 @@ def plot_flex(my_ems, device):
                 p5 = plt_pow.bar(ts[x], dat1['Pos_P'][x], color='darkred', width=1.0, align='edge', edgecolor='k', zorder=3)
                 p7 = plt_prc.bar(ts[x], dat1['Pos_Pr'][x], color='darkred', width=1.0, align='edge', edgecolor='k', zorder=3)
     
-        # Legend
-        if neg_leg == 1 and pos_leg == 1:
-            plt_cum.legend((p1[0], p2[0], p3[0]), ('Cummulative', 'Neg_flex', 'Pos_flex'),
-                           prop={'size': font_size}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-            plt_pow.legend((p4, p5), ('$P_{Neg\_flex}}$', '$P_{Pos\_flex}}$'),
-                           prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-            plt_prc.legend((p6, p7), ('$C_{Neg\_flex}}$', '$C_{Pos\_flex}}$'),
-                           prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-        elif neg_leg == 1:
-            plt_cum.legend((p1[0], p2[0]), ('Cummulative', 'Neg_flex'),
-                           prop={'size': font_size}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-            plt_pow.legend(p4, ['$P_{Neg\_flex}}$'],
-                           prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-            plt_prc.legend(p6, ['$C_{Neg\_flex}}$'],
-                           prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-        elif pos_leg == 1:
-            plt_cum.legend((p1[0], p3[0]), ('Cummulative', 'Pos_flex'),
-                           prop={'size': font_size}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-            plt_pow.legend((p5), ['$P_{Pos\_flex}}$'],
-                           prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-            plt_prc.legend((p7), ['$C_{Pos\_flex}}$'],
-                           prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
-        else:
-            plt_cum.legend(['Cummulative'], prop={'size': font_size+2}, frameon=False)
+        # # Legend
+        # if neg_leg == 1 and pos_leg == 1:
+        #     plt_cum.legend((p1[0], p2[0], p3[0]), ('Cummulative', 'Neg_flex', 'Pos_flex'),
+        #                    prop={'size': font_size}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        #     plt_pow.legend((p4, p5), ('$P_{Neg\_flex}}$', '$P_{Pos\_flex}}$'),
+        #                    prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        #     plt_prc.legend((p6, p7), ('$C_{Neg\_flex}}$', '$C_{Pos\_flex}}$'),
+        #                    prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        # elif neg_leg == 1:
+        #     plt_cum.legend((p1[0], p2[0]), ('Cummulative', 'Neg_flex'),
+        #                    prop={'size': font_size}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        #     plt_pow.legend(p4, ['$P_{Neg\_flex}}$'],
+        #                    prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        #     plt_prc.legend(p6, ['$C_{Neg\_flex}}$'],
+        #                    prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        # elif pos_leg == 1:
+        #     plt_cum.legend((p1[0], p3[0]), ('Cummulative', 'Pos_flex'),
+        #                    prop={'size': font_size}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        #     plt_pow.legend((p5), ['$P_{Pos\_flex}}$'],
+        #                    prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        #     plt_prc.legend((p7), ['$C_{Pos\_flex}}$'],
+        #                    prop={'size': font_size+2}, bbox_to_anchor=(1.01, 0), loc="lower left", frameon=False)
+        # else:
+        #     plt_cum.legend(['Cummulative'], prop={'size': font_size+2}, frameon=False)
     
         # Labels            
         plt_cum.set_title('Flexibility plots' + ' - ' + device.upper(), fontsize=font_size, pad=20)

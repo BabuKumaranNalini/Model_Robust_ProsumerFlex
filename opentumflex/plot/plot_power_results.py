@@ -5,7 +5,7 @@ import pandas as pd
 import math
 
 
-def plot_power_results(ems):
+def plot_power_results(ems, save_fig=False):
     """ visualize only electricity balance and battery SOC results based on ems dict
     Args:
         - ems: ems dict with optimization results
@@ -21,7 +21,7 @@ def plot_power_results(ems):
     ts = pd.to_datetime(ts_raw).strftime('%H:%M')
     ts_date = pd.to_datetime(ts_raw).strftime('%d %b %Y')
 
-    width = 1  # the width of the bars
+    width = 0.8  # the width of the bars
 
     # obtain the optimization results from ems dict
     opt_res = ems['optplan']
@@ -30,7 +30,7 @@ def plot_power_results(ems):
 
     # figure properties - optimized for LaTeX two-column documents
     # Use (3.5, 4.0) for single column or (7.0, 3.5) for two-column span
-    fig, axs = plt.subplots(2, 1, figsize=(4, 3.5), gridspec_kw={'height_ratios': [4, 1]})
+    fig, axs = plt.subplots(2, 1, figsize=(4, 3.5), gridspec_kw={'height_ratios': [3, 1]})
     plt.rcParams["font.family"] = "Arial"
 
     # ================ ELECTRICITY BALANCE PLOT ================
@@ -141,8 +141,9 @@ def plot_power_results(ems):
     
     # Final formatting
     fig.align_ylabels(axs[:])
-    plt.tight_layout()
-    plt.savefig('figures/power_balance.pdf', format='pdf', dpi=300)
+    plt.tight_layout(pad=0.5)
+    if save_fig:
+        plt.savefig('figures/power_balance.pdf', format='pdf', dpi=300)
     plt.show()
 
     return fig
