@@ -41,7 +41,7 @@ for r in risk:
 # %%
 # visualize results
 import matplotlib.pyplot as plt
-save_fig = True  # save figures as pdf in folder 'figures'
+save_fig = False  # save figures as pdf in folder 'figures'
 
 # Set Arial font globally
 plt.rcParams["font.family"] = "Arial"
